@@ -1,5 +1,7 @@
 var express=require('express');
 var app =express();
+var fortune=require('./lib/fortune.js')
+
 app.set('port',process.env.PORT||3000);
 // 设置 handlebars 视图引擎
 var handlebars = require('express3-handlebars')
@@ -14,18 +16,19 @@ app.get('/',function (req,res) {
   res.render('home');
 });
 app.get('/about',function (req,res) {
-  var randomFortune=
-                fortunes[Math.floor(Math.random()*fortunes.length)];//利用长度，求下标
-  res.render('about',{fortune:randomFortune});
+  // var randomFortune=
+  //               fortunes[Math.floor(Math.random()*fortunes.length)];//利用长度，求下标
+  // res.render('about',{fortune:randomFortune});
+  res.render('about',{for:fortune.getFortune()});
 })
-
-var fortunes=[
-  "aaaaaaaaaaaaaa",
-  "bbbbbbbbbbbbbb",
-  "cccccccccccccc",
-  "dddddddddddddd",
-  "fffffffffffffff",
-];
+//
+// var fortunes=[
+//   "aaaaaaaaaaaaaa",
+//   "bbbbbbbbbbbbbb",
+//   "cccccccccccccc",
+//   "dddddddddddddd",
+//   "fffffffffffffff",
+// ];
 
 
 
