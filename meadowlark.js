@@ -9,27 +9,23 @@ var handlebars = require('express3-handlebars')
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+app.use(function (req,res,next) {
+  res.locals.showTests=app.get("env")!=='production' && req.query.test==='1';
+  next();
+});
 app.use(express.static(__dirname+'/public'));
 
 
+//路由放在这里
 app.get('/',function (req,res) {
   res.render('home');
 });
 app.get('/about',function (req,res) {
-  // var randomFortune=
-  //               fortunes[Math.floor(Math.random()*fortunes.length)];//利用长度，求下标
-  // res.render('about',{fortune:randomFortune});
-  res.render('about',{for:fortune.getFortune()});
-})
-//
-// var fortunes=[
-//   "aaaaaaaaaaaaaa",
-//   "bbbbbbbbbbbbbb",
-//   "cccccccccccccc",
-//   "dddddddddddddd",
-//   "fffffffffffffff",
-// ];
 
+  res.render('about',{for:fortune.getFortune(),
+  pageTestScript:'/qa/tests-about.js'
+  });
+});
 
 
 //404 page
